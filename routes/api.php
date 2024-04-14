@@ -28,6 +28,8 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('jwt.auth', 'checkUserRole:Cliente')->group(function () {
         Route::get('cities', 'App\Http\Controllers\API\CityController@index');
+
+        Route::get('branches', 'App\Http\Controllers\API\BranchesController@index');
     });
     
 
