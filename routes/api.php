@@ -10,6 +10,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', 'App\Http\Controllers\API\Auth\AuthController@login');
         Route::post('register', 'App\Http\Controllers\API\Auth\AuthController@register');
+        Route::post('refresh', 'App\Http\Controllers\API\Auth\AuthController@refresh');
+        Route::post('me', 'App\Http\Controllers\API\Auth\AuthController@me');
     });
 
     Route::get('cities', 'App\Http\Controllers\API\CityController@index');
