@@ -62,15 +62,33 @@ class AuthController extends Controller
         }
     }
 
-
-    public function user()
+    public function refresh(Request $request)
     {
-        return Auth::user();
+        try {
+            $token = JWTAuth::parseToken()->refresh();
+            return response()->json(['token' => $token]);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Unable to update token.'], 500);
+        }
+    }
+
+    public function me(){
+        try {
+            $user = $this->user(); 
+            return response()->json(['user' => $user]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while trying to retrieve the user.'], 500);
+        }
     }
 
     protected function respondWithToken($token)
     {
         return response()->json( $this->token($token));
+    }
+
+    public function user()
+    {
+        return Auth::user();
     }
 
     protected function token($token) {
