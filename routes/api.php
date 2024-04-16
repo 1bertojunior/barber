@@ -9,12 +9,13 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('auth')->group(function () {
         Route::post('login', 'App\Http\Controllers\API\Auth\AuthController@login');
-        Route::post('register', 'App\Http\Controllers\API\Auth\AuthController@register');
-        Route::post('refresh', 'App\Http\Controllers\API\Auth\AuthController@refresh');
-        Route::post('me', 'App\Http\Controllers\API\Auth\AuthController@me');
+        Route::post('register', 'App\Http\Controllers\API\Auth\AuthController@register');        
     });
-
-    Route::get('cities', 'App\Http\Controllers\API\CityController@index');
+    
+    Route::middleware('jwt.auth')->group(function () {
+        Route::post('refresh', 'App\Http\Controllers\API\Auth\AuthController@refresh');
+        Route::get('me', 'App\Http\Controllers\API\Auth\AuthController@me');
+    });
 
     Route::middleware('jwt.auth', 'checkUserRole:SysAdmin')->group(function () {
         
